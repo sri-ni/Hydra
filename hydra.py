@@ -73,6 +73,22 @@ def login():
 			flash('You are logged in')
 			return redirect(url_for('show_entries'))
 	return render_template('login.html', error=error)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+	error = None
+	if request.method == 'POST':
+		if request.form['username'] == None:
+			error = 'Blank username'
+		elif request.form['password'] == None:
+			error = 'Blank password'
+		else:
+			g.db.execute('insert into accounts (username, password) values (?, ?)', [request.form['username'], \
+				request.form['password']])
+			g.db.commit()
+			flash('You are registered!')
+			return redirect(url_for('login'))
+	return render_template('register.html', error=error)
 	
 @app.route('/logout')
 def logout():
