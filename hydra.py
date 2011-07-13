@@ -78,13 +78,12 @@ def login():
 def register():
 	error = None
 	if request.method == 'POST':
-		if request.form['username'] == None:
+		if request.form['username'] == '':
 			error = 'Blank username'
-		elif request.form['password'] == None:
+		elif request.form['password'] == '':
 			error = 'Blank password'
 		else:
-			g.db.execute('insert into accounts (username, password) values (?, ?)', [request.form['username'], \
-				request.form['password']])
+			g.db.execute('insert into accounts (username, password) values (?, ?)', [request.form['username'], request.form['password']])
 			g.db.commit()
 			flash('You are registered!')
 			return redirect(url_for('login'))
