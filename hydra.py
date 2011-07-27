@@ -51,6 +51,23 @@ def show_entries():
 	entries = [dict(liquid=row[0], qty=row[1]) for row in cur.fetchall()]
 	return render_template('show_entries.html', entries=entries)
 	
+def validate_user(username, password):
+	error = None
+	cur = g.db.execute('select username, password from accounts')
+	for row in cur.fetchall():
+		message = row[0] + ' ' + row[1] + '\n'
+		flash(message)
+		if username == row[0]:
+			if password == row[1]:
+				error = 'Login success'
+				break
+			else:
+				error = 'Invalid password'
+				break
+	if error == None:
+		error = 'Invalid username'
+	return error
+		
 @app.route('/add', methods=['POST'])
 def add_entry():
 	if not session.get('logged_in'):
@@ -64,11 +81,10 @@ def add_entry():
 def login():
 	error = None
 	if request.method == 'POST':
-		if request.form['username'] != app.config['USERNAME']:
-			error = 'Invalid username'
-		elif request.form['password'] != app.config['PASSWORD']:
-			error = 'Invalid password'
-		else:
+		form_username = request.form['username'] 
+		form_password = request.form['password'] 
+		error = validate_user(form_username, form_password)
+		if error == 'Login success':
 			session['logged_in'] = True
 			flash('You are logged in')
 			return redirect(url_for('show_entries'))
