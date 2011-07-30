@@ -44,19 +44,23 @@ def before_request():
 def teardown_request(exception):
 	"""Closes the database again at the end of each request"""
 	g.db.close()
+
+def count_userbase():
+	count = g.db.execute('select COUNT(username) from accounts')
+	usercount = count.fetchall()
+	flash(usercount[0])
 	
 @app.route('/')
 def show_entries():
 	cur = g.db.execute('select liquid, qty from entries order by id desc')
 	entries = [dict(liquid=row[0], qty=row[1]) for row in cur.fetchall()]
+	usercount = count_userbase()
 	return render_template('show_entries.html', entries=entries)
 	
 def validate_user(username, password):
 	error = None
 	cur = g.db.execute('select username, password from accounts')
 	for row in cur.fetchall():
-		message = row[0] + ' ' + row[1] + '\n'
-		flash(message)
 		if username == row[0]:
 			if password == row[1]:
 				error = 'Login success'
@@ -86,7 +90,7 @@ def login():
 		error = validate_user(form_username, form_password)
 		if error == 'Login success':
 			session['logged_in'] = True
-			flash('You are logged in')
+			flash('Welcome ' + form_username)
 			return redirect(url_for('show_entries'))
 	return render_template('login.html', error=error)
 
