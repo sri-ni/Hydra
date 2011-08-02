@@ -3,21 +3,19 @@
   {% if session.logged_in %}
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
-        <dt>Liquid:
-        <dd><input type=text size=30 name=liquid>
-        <dt>Qty:
-        <dd><textarea name=qty rows=5 cols=40></textarea>
-        <dd><input type=submit value=Log>
+        <dt>Liquid: <input type=text size=30 name=liquid>
+        <dt>Qty:    <input type=text name=qty size=10>
+        <dd><input type=submit value=Log class=allclick>
       </dl>
     </form>
   {% endif %}
-<!--
+
   <ul class=entries>
   {% for entry in entries %}
-    <li><h2>{{ entry.liquid }}</h2>{{ entry.qty|safe }}
+    <li><h2>{{ entry.liquid }}</h2> {{ entry.qty|safe }} ml
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
   </ul>
--->
+
 {% endblock %}

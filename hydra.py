@@ -48,15 +48,19 @@ def teardown_request(exception):
 def count_userbase():
 	count = g.db.execute('select COUNT(username) from accounts')
 	usercount = count.fetchall()
-	flash(usercount[0])
+	return usercount[0]
 	
 @app.route('/')
+def home():
+	for usercount in count_userbase(): pass
+	return render_template('home.html', usercount=usercount)
+
+@app.route('/userhome')
 def show_entries():
 	cur = g.db.execute('select liquid, qty from entries order by id desc')
 	entries = [dict(liquid=row[0], qty=row[1]) for row in cur.fetchall()]
-	usercount = count_userbase()
 	return render_template('show_entries.html', entries=entries)
-	
+		
 def validate_user(username, password):
 	error = None
 	cur = g.db.execute('select username, password from accounts')
@@ -113,7 +117,7 @@ def register():
 def logout():
 	session.pop('logged_in', None)
 	flash('You are logged out')
-	return redirect(url_for('show_entries'))
+	return redirect(url_for('home'))
 		
 if __name__ == '__main__':
 	app.run()
