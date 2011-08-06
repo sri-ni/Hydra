@@ -86,8 +86,6 @@ def add_entry():
 	liquid = request.form['liquid']
 	qty = request.form['qty']
 	username = session['username']
-	#add_query = 'insert into entries (timestamp, liquid, qty, username) values (?, ?, ?, ?)', [timestamp, liquid, qty, username]
-	#print add_query
 	g.db.execute('insert into entries (timestamp, liquid, qty, username) values (?, ?, ?, ?)', [timestamp, liquid, qty, username])
 	g.db.commit()
 	flash('New entry was successfully added')
