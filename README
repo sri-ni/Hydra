@@ -1,2 +1,7 @@
 
 A web application to log personal hydration routine.
+
+- New users can register
+- Log hydration routine
+- Timestamped 
+- Routine viewed as blog, LIFO
