@@ -13,6 +13,7 @@ from __future__ import with_statement
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from contextlib import closing
+from time import gmtime, strftime, localtime
 
 # Configuration
 DATABASE = '/tmp/hydra.db'
@@ -57,8 +58,9 @@ def home():
 
 @app.route('/userhome')
 def show_entries():
-	cur = g.db.execute('select liquid, qty from entries order by id desc')
-	entries = [dict(liquid=row[0], qty=row[1]) for row in cur.fetchall()]
+	query = 'select timestamp, liquid, qty from entries where username="'+session['username']+'"'
+	cur = g.db.execute(query)
+	entries = [dict(timestamp=row[0], liquid=row[1], qty=row[2]) for row in cur.fetchall()]
 	return render_template('show_entries.html', entries=entries)
 		
 def validate_user(username, password):
@@ -80,7 +82,13 @@ def validate_user(username, password):
 def add_entry():
 	if not session.get('logged_in'):
 		abort(401)
-	g.db.execute('insert into entries (liquid, qty) values (?, ?)', [request.form['liquid'], request.form['qty']])
+	timestamp = strftime("%b %d, %Y %H:%M:%S", localtime())
+	liquid = request.form['liquid']
+	qty = request.form['qty']
+	username = session['username']
+	#add_query = 'insert into entries (timestamp, liquid, qty, username) values (?, ?, ?, ?)', [timestamp, liquid, qty, username]
+	#print add_query
+	g.db.execute('insert into entries (timestamp, liquid, qty, username) values (?, ?, ?, ?)', [timestamp, liquid, qty, username])
 	g.db.commit()
 	flash('New entry was successfully added')
 	return redirect(url_for('show_entries'))
@@ -94,6 +102,7 @@ def login():
 		error = validate_user(form_username, form_password)
 		if error == 'Login success':
 			session['logged_in'] = True
+			session['username'] = form_username
 			flash('Welcome ' + form_username)
 			return redirect(url_for('show_entries'))
 	return render_template('login.html', error=error)

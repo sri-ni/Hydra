@@ -12,7 +12,7 @@
 
   <ul class=entries>
   {% for entry in entries %}
-    <li><h2>{{ entry.liquid }}</h2> {{ entry.qty|safe }} ml
+    <li><h2>{{ entry.timestamp }} {{ entry.liquid }} {{ entry.qty|safe }} ml </h2>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
