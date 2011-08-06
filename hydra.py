@@ -58,7 +58,7 @@ def home():
 
 @app.route('/userhome')
 def show_entries():
-	query = 'select timestamp, liquid, qty from entries where username="'+session['username']+'"'
+	query = 'select timestamp, liquid, qty from entries where username="'+session['username']+'" order by id desc'
 	cur = g.db.execute(query)
 	entries = [dict(timestamp=row[0], liquid=row[1], qty=row[2]) for row in cur.fetchall()]
 	return render_template('show_entries.html', entries=entries)
@@ -88,7 +88,6 @@ def add_entry():
 	username = session['username']
 	g.db.execute('insert into entries (timestamp, liquid, qty, username) values (?, ?, ?, ?)', [timestamp, liquid, qty, username])
 	g.db.commit()
-	flash('New entry was successfully added')
 	return redirect(url_for('show_entries'))
 	
 @app.route('/login', methods=['GET', 'POST'])
