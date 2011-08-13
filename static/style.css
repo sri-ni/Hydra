@@ -1,7 +1,7 @@
 body            { font-family: sans-serif; }
 a, h1, h2       { color: #377BA8; border: 2px; }
 h1, h2, h3, h4  { font-family: 'Georgia', serif; margin: 0; }
-h1              { border-bottom: 2px solid #eee; }
+
 h2              { font-size: 1.2em; }
 h3				{ font-size: 1em; color: #999999; }
 h4              { font-size: 1em; color: #aa3333; }
@@ -35,14 +35,22 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
     background-color: #ffffff;
     height: 82px;
     min-width: 50px;
+	border-bottom: 2px solid #eee;
 }
 
 .utility_container {
     float: right;
-    line-height: 1.5;
-    min-width: 50px;
+}
+
+.home_body {
+	padding: 20px;
 }
 
 .mainWash {
     background-color: #DDE2ED;
+}
+
+.footer {
+	border-top: 2px solid #eee;
+	padding: 3px;
 }
