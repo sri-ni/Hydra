@@ -61,7 +61,8 @@ def show_entries():
 	query = 'select timestamp, liquid, qty from entries where username="'+session['username']+'" order by id desc'
 	cur = g.db.execute(query)
 	entries = [dict(timestamp=row[0], liquid=row[1], qty=row[2]) for row in cur.fetchall()]
-	return render_template('show_entries.html', entries=entries)
+	username = session['username'].capitalize()
+	return render_template('show_entries.html', entries=entries, user=username)
 		
 def validate_user(username, password):
 	error = None

@@ -90,3 +90,15 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 .timestamp {
 	color: #999;
 }
+
+.user {
+	color: #5280a1;
+	padding: 20px 0px 10px 20px;
+	font-family: 'Georgia';
+	font-size: 1.2em;
+	text-decoration:underline;
+}
+
+.user_data {
+	padding: 20px 0px 0px 30px;
+}

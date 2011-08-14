@@ -12,6 +12,8 @@
   {% endif %}
 </div>
 
+<div class="user_data">
+  <div class="user"><h3>{{ user }}'s log<h3></div>
   <ul class=entries>
   {% for entry in entries %}
     <li><h3 class="timestamp">{{ entry.timestamp }}</h3> <h4 class="liquid">{{ entry.liquid }} {{ entry.qty|safe }} ml </h4>
@@ -19,5 +21,6 @@
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
   </ul>
+</div>
 
 {% endblock %}
