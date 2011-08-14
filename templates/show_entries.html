@@ -1,18 +1,20 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="home_body">
   {% if session.logged_in %}
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
-        <dt> <input type=text size=30 name=liquid placeholder="Liquid">
+        <dt> <input type=text size=30 name=liquid placeholder="Liquid consumed">
         <dt> <input type=text name=qty size=20 placeholder="Quantity in ml">
         <dd><input type=submit value=Log class=allclick>
       </dl>
     </form>
   {% endif %}
+</div>
 
   <ul class=entries>
   {% for entry in entries %}
-    <li><h3>{{ entry.timestamp }}</h3> <h4>{{ entry.liquid }} {{ entry.qty|safe }} ml </h4>
+    <li><h3 class="timestamp">{{ entry.timestamp }}</h3> <h4 class="liquid">{{ entry.liquid }} {{ entry.qty|safe }} ml </h4>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}

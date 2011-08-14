@@ -3,23 +3,22 @@ a, h1, h2       { color: #377BA8; border: 2px; }
 h1, h2, h3, h4  { font-family: 'Georgia', serif; margin: 0; }
 
 h2              { font-size: 1.2em; }
-h3				{ font-size: 1em; color: #999999; }
+h3				{ font-size: 1em; color: #555; }
 h4              { font-size: 1em; color: #aa3333; }
 p				{ color: #377BA8; font-family: 'Georgia', serif; 
 				  font-size: 1.2em; margin: 4em;}
 
-.page           { margin: 2em auto; padding: 0.8em; background: white; }
+.page			{}
 .entries        { list-style: none; margin: 0; padding: 0; }
 .entries li     { margin: 0.8em 1.2em; }
 .entries li h2  { margin-left: -1em; }
-.add-entry      { font-size: 0.9em; border-bottom: 1px solid #ccc; }
+.add-entry      { font-size: 0.9em; }
 .add-entry dl   { font-weight: bold; }
 .metanav        { text-align: right; font-size: 0.8em; padding: 0.3em;
                   margin-bottom: 0em; background: #eeeeee; }
 .flash          { background: #CEE5F5; padding: 0.5em;
                   border: 1px solid #AACBE2; }
 .error          { background: #F0D6D6; padding: 0.5em; }
-.footer         { text-align: left; font-size: 1.0em; }
 .allclick		{ background-color: #F5F5F5;
 				  border: 1px solid rgba(0, 0, 0, 0.1);
 				  border-radius: 2px 2px 2px 2px;
@@ -35,7 +34,7 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
     background-color: #ffffff;
     height: 82px;
     min-width: 50px;
-	border-bottom: 2px solid #eee;
+	padding: 0px 0px 0px 50px;
 }
 
 .utility_container {
@@ -43,7 +42,11 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 }
 
 .home_body {
-	padding: 20px;
+	padding: 50px 0px 50px 50px;
+	background-color: #5aa1d1;
+	color: #fff;
+	font-family: 'Verdana';
+	height: auto;
 }
 
 .mainWash {
@@ -51,6 +54,39 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 }
 
 .footer {
-	border-top: 2px solid #eee;
-	padding: 3px;
+	border-top: 1px solid #eee;
+	padding: 20px 0 20px 50px;
+	min-height: 100px;
+	background-color: #eee;
+	color: #555;
+	text-align: left; 
+	font-size: 1.0em; 
+	font-family: 'Helvetica';
+}
+
+.text_topic {
+	color: #fff;
+	text-decoration:underline;
+}
+
+.text_summary {
+	padding-top: 20px;
+	font-size: 1.0em;
+	color: #fff;
+	font-family: 'Helvetica';
+}
+
+.text_descriptive {
+	font-size: 0.8em;
+	color: #fff;
+	font-family: 'Helvetica';
+	font-style:italic;
+}
+
+.liquid {
+	color: #5280a1;
+}
+
+.timestamp {
+	color: #999;
 }
