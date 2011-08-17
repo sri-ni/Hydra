@@ -1,18 +1,30 @@
 {% extends "layout.html" %}
 {% block body %}
+
+<script>
+ $(document).ready(function() {
+   $("div.home_body").show();
+ });
+</script>
+
 <div class="home_body">
   {% if session.logged_in %}
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
         <dt> <input type=text size=30 name=liquid placeholder="Liquid consumed">
         <dt> <input type=text name=qty size=20 placeholder="Quantity in ml">
-        <dd><input type=submit value=Log class=allclick>
+        <dt><input type=submit value=Log class=allclick>
       </dl>
     </form>
   {% endif %}
 </div>
 
-<div class="user_data">
+<div class="user_data" id="dp">
+   <button id="showlog" value=Log class=allclick>Show {{ user }}'s Log</button>
+   <div class="entrycount"><h3>{{ entry_count }} Entries<h3></div>
+</div>
+
+<div class="user_data" id="user_log" style="display:none">
   <div class="user"><h3>{{ user }}'s log<h3></div>
   <ul class=entries>
   {% for entry in entries %}
@@ -22,5 +34,11 @@
   {% endfor %}
   </ul>
 </div>
+
+<script>
+ $("#showlog").click(function() {
+   $("div").show("slow");
+ });
+</script>
 
 {% endblock %}

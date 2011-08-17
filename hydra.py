@@ -27,34 +27,41 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.from_envvar('HYDRA_SETTINGS', silent=True)
 
+
 def connect_db():
 	return sqlite3.connect(app.config['DATABASE'])
+
 
 def init_db():
 	with closing(connect_db()) as db:
 		with app.open_resource('schema.sql') as f:
 			db.cursor().executescript(f.read())
 		db.commit()
+	
 		
 @app.before_request
 def before_request():
 	"""Make sure we are connected to database on each request"""
 	g.db = connect_db()
 
+
 @app.teardown_request
 def teardown_request(exception):
 	"""Closes the database again at the end of each request"""
 	g.db.close()
 
+
 def count_userbase():
 	count = g.db.execute('select COUNT(username) from accounts')
 	usercount = count.fetchall()
 	return usercount[0]
+
 	
 @app.route('/')
 def home():
 	for usercount in count_userbase(): pass
 	return render_template('home.html', usercount=usercount)
+
 
 @app.route('/userhome')
 def show_entries():
@@ -62,7 +69,11 @@ def show_entries():
 	cur = g.db.execute(query)
 	entries = [dict(timestamp=row[0], liquid=row[1], qty=row[2]) for row in cur.fetchall()]
 	username = session['username'].capitalize()
-	return render_template('show_entries.html', entries=entries, user=username)
+	count = g.db.execute('select COUNT(*) from entries where username="'+session['username']+'"')
+	ecount = count.fetchall()
+	for entry_count in ecount[0]: pass
+	return render_template('show_entries.html', entries=entries, user=username, entry_count=entry_count)
+	
 		
 def validate_user(username, password):
 	error = None
@@ -78,6 +89,7 @@ def validate_user(username, password):
 	if error == None:
 		error = 'Invalid username'
 	return error
+
 		
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -90,6 +102,7 @@ def add_entry():
 	g.db.execute('insert into entries (timestamp, liquid, qty, username) values (?, ?, ?, ?)', [timestamp, liquid, qty, username])
 	g.db.commit()
 	return redirect(url_for('show_entries'))
+
 	
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -104,6 +117,7 @@ def login():
 			flash('Welcome ' + form_username)
 			return redirect(url_for('show_entries'))
 	return render_template('login.html', error=error)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -120,11 +134,13 @@ def register():
 			return redirect(url_for('login'))
 	return render_template('register.html', error=error)
 	
+	
 @app.route('/logout')
 def logout():
 	session.pop('logged_in', None)
 	flash('You are logged out')
 	return redirect(url_for('home'))
+
 		
 if __name__ == '__main__':
 	app.run()

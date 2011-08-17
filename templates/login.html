@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
+
+<script>
+ $(document).ready(function() {
+   $("div.home_body").show();
+ });
+</script>
+
 <div class="home_body">
   <h2 class="text_topic">Login</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}

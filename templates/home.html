@@ -1,13 +1,25 @@
 {% extends "layout.html" %}
 {% block body %}
+
+<script>
+ $(document).ready(function() {
+	$("div.home_body").show("slow");
+	$("div.footer").show("slow");
+ });
+</script>
+
 <div class="home_body">
 	<h2 class="text_topic">Track your hydration.</h2>
-	<h2 class="text_summary">Log your liquid intake.
-	<h4 class="text_descriptive">Save all the liquids that you consume for the day.
-	<h2 class="text_summary">Track your routine.
-	<h4 class="text_descriptive">Visualize your progress, so you know where you are relative to your goals.
-	<h2 class="text_summary">Share with your network.
-	<h4 class="text_descriptive">Let your network know how you are doing and see what they are upto.
+	
+	<p class="text_main_features"><b>Log your liquid intake.</b>
+    <br>Save all the liquids that you consume for the day.</p>
+	
+	<p class="text_main_features"><b>Track your routine.</b>
+    <br>Visualize your progress, so you know where you are relative to your goals.</p>
+	
+	<p class="text_main_features"><b>Share with your network.</b>
+    <br>Let your network know how you are doing and see what they are upto.</p>
+	
 </div>
 
 <div class="footer">
