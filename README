@@ -5,3 +5,20 @@ A web application to log personal hydration routine.
 - Log hydration routine
 - Timestamped 
 - Routine viewed as blog, LIFO
+
+PRE-REQUISITES
+1. virtualenv
+2. Flask
+3. python 2.6 or greater
+
+INSTALL & SETUP
+1. Download package
+2. Terminal prompt # . env/bin/activate 
+3. python prompt >>> from hydra import init_db
+4. python prompt >>> init_db()
+5. Terminal prompt # python hydra.py
+6. Browser (chrome), go to localhost:5000
+
+USAGE
+- Register & Login
+- Log your routine
