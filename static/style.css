@@ -5,6 +5,7 @@ h1, h2, h3, h4  { font-family: 'Georgia', serif; margin: 0; }
 h2              { font-size: 1.2em; }
 h3				{ font-size: 1em; color: #555; }
 h4              { font-size: 1em; color: #aa3333; }
+h5              { font-size: 1em; color: #aa3333; padding: 0;}
 p				{ color: #377BA8; font-family: 'Georgia', serif; 
 				  font-size: 1.2em; margin: 4em;}
 
@@ -42,7 +43,7 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 }
 
 .home_body {
-	padding: 50px 0px 50px 50px;
+	padding: 30px 0px 30px 50px;
 	background-color: #5aa1d1;
 	color: #fff;
 	font-family: 'Helvetica';
@@ -109,13 +110,11 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 	text-decoration:underline;
 }
 
-.entrycount {
-	color: #5280a1;
-	padding: 20px 0px 10px 20px;
-	font-family: 'Georgia';
-	font-size: 1.2em;
-}
-
 .user_data {
 	padding: 20px 0px 0px 30px;
+}
+
+.user_control {
+	padding: 20px 0px 20px 50px;
+	background-color: #bbb;
 }

@@ -13,7 +13,7 @@
 			or
 			<a href="{{ url_for('register') }}">register</a>
 			{% else %}
-			<a href="{{ url_for('show_entries') }}">home</a>
+			<a href="{{ url_for('show_entries') }}">{{ user }}'s home</a>
 			.
 			<a href="{{ url_for('logout') }}">log out</a>
 			{% endif %}

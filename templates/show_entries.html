@@ -7,6 +7,7 @@
  });
 </script>
 
+<!--Main input layer-->
 <div class="home_body">
   {% if session.logged_in %}
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
@@ -19,11 +20,15 @@
   {% endif %}
 </div>
 
-<div class="user_data" id="dp">
-   <button id="showlog" value=Log class=allclick>Show {{ user }}'s Log</button>
-   <div class="entrycount"><h3>{{ entry_count }} Entries<h3></div>
+<!--User control layer-->
+<div class="user_control" id="dp">
+   <button id="showlog" value=Log class=allclick>Show Log ({{ entry_count }})</button>
+   <button id="hidelog" value=HideLog class=allclick style="display:none">Hide Log</button>
+   <button id="showlog" value=Alert class=allclick>Show Alert (0)</button>
+   <button id="showlog" value=Log class=allclick>Show Graph (0)</button>
 </div>
 
+<!--User data layer-->
 <div class="user_data" id="user_log" style="display:none">
   <div class="user"><h3>{{ user }}'s log<h3></div>
   <ul class=entries>
@@ -36,8 +41,18 @@
 </div>
 
 <script>
+// Show user log 
  $("#showlog").click(function() {
-   $("div").show("slow");
+   $("div.user_data").slideDown("slow");
+   $(this).hide();
+   $("#hidelog").show();
+ });
+
+// Hide user log
+ $("#hidelog").click(function() {
+   $(".user_data").slideUp("slow");
+   $(this).hide();
+   $("#showlog").show();
  });
 </script>
 

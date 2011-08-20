@@ -60,7 +60,8 @@ def count_userbase():
 @app.route('/')
 def home():
 	for usercount in count_userbase(): pass
-	return render_template('home.html', usercount=usercount)
+	username = session['username'].capitalize()
+	return render_template('home.html', user=username, usercount=usercount)
 
 
 @app.route('/userhome')
