@@ -98,6 +98,10 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 	color: #5280a1;
 }
 
+.liquid_count {
+	color: #5280a1;
+}
+
 .timestamp {
 	color: #999;
 }
@@ -116,5 +120,5 @@ p				{ color: #377BA8; font-family: 'Georgia', serif;
 
 .user_control {
 	padding: 20px 0px 20px 50px;
-	background-color: #bbb;
+	background-color: #ccc;
 }

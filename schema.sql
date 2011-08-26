@@ -3,6 +3,7 @@ drop table if exists entries;
 create table entries (
 	id integer primary key autoincrement,
 	timestamp string not null,
+	timestamp_num string not null,
 	liquid string not null,
 	qty string not null,
 	username string not null

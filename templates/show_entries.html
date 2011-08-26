@@ -7,6 +7,14 @@
  });
 </script>
 
+<script language="javascript" type="text/javascript" src="/templates/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="/templates/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript" src="/templates/jqplot.categoryAxisRenderer.min.js"></script>
+<script type="text/javascript" src="/templates/jqplot.pointLabels.min.js"></script>
+<script language="javascript" type="text/javascript" src="/templates/jquery-1.4.4.min.js"></script>
+<script language="javascript" type="text/javascript" src="/templates/jquery.jqplot.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/templates/jquery.jqplot.css" />
+
 <!--Main input layer-->
 <div class="home_body">
   {% if session.logged_in %}
@@ -14,7 +22,7 @@
       <dl>
         <dt> <input type=text size=30 name=liquid placeholder="Liquid consumed">
         <dt> <input type=text name=qty size=20 placeholder="Quantity in ml">
-        <dt><input type=submit value=Log class=allclick>
+        <dt><input type=submit value=Log class=allclick id="logenty">
       </dl>
     </form>
   {% endif %}
@@ -24,11 +32,19 @@
 <div class="user_control" id="dp">
    <button id="showlog" value=Log class=allclick>Show Log ({{ entry_count }})</button>
    <button id="hidelog" value=HideLog class=allclick style="display:none">Hide Log</button>
-   <button id="showlog" value=Alert class=allclick>Show Alert (0)</button>
-   <button id="showlog" value=Log class=allclick>Show Graph (0)</button>
+   <button id="showstats" value=Log class=allclick>Show Stats</button>
+   <button id="showgraph" value=Log class=allclick>Show Graph</button>
+   <button id="showalert" value=Alert class=allclick>Show Alert</button>
+</div>
+
+<!--Alerts-->
+<div class="user_data" id="user_alert" style="display:none">
+  <div class="user"><h4>{{ user }}'s alert</div>
+  <ul class=entries><li><h4>Have not consumed liquids in {{ parched_time }} hours
 </div>
 
 <!--User data layer-->
+<!--Log-->
 <div class="user_data" id="user_log" style="display:none">
   <div class="user"><h3>{{ user }}'s log<h3></div>
   <ul class=entries>
@@ -40,17 +56,90 @@
   </ul>
 </div>
 
+<!--Stats-->
+<div class="user_data" id="user_stat" style="display:none">
+  <div class="user"><h3>{{ user }}'s statistics<h3></div>
+  <ul class=entries>
+  {% if total_qty %}
+	<li><h3 class="timestamp">Total Liquid Consumption: <h4 class="liquid">{{ total_qty }} ml </h3>
+ 	 <br>
+	  {% for entry in liquid_ctgry_cnt %}
+	    <li><h4 class="liquid">{{ entry.category }} ({{ entry.count }})</h4>
+	  {% endfor %}
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endif %}
+  </ul>
+  <br>
+  <ul class=entries>
+  {% if daily_consumption %}
+	  {% for entry in daily_consumption %}
+	    <li><h3 class="timestamp">{{ entry.date }} <h4 class="liquid">{{ entry.qty }} ml</h4>
+	  {% endfor %}
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endif %}
+  </ul>
+</div>
+
+<!--Graph-->
+<div class="user_data" id="user_graph" style="display:none">
+  <div class="user"><h3>{{ user }}'s graph<h3></div>
+  <div id="chartdiv" style="height:400px;width:300px; "></div>
+</div>
+
+
+
 <script>
-// Show user log 
- $("#showlog").click(function() {
-   $("div.user_data").slideDown("slow");
-   $(this).hide();
-   $("#hidelog").show();
+
+// Show user alert 
+ $("#showalert").click(function() {
+	var msg = "Have not consumed liquids in {{ parched_time }}";
+	if ($(this).html() == "Show Alert") {
+		$("#user_alert").slideDown("slow");
+		$(this).html("Hide Alert");
+	}
+	else {
+		$("#user_alert").slideUp("slow");
+		$(this).html("Show Alert");
+	}
  });
 
+// Show user graph 
+ $("#showgraph").click(function() {
+	
+	if ($(this).html() == "Show Graph") {
+		$("#user_graph").slideDown("slow");
+		$(this).html("Hide Graph");
+	}
+	else {
+		$("#user_graph").slideUp("slow");
+		$(this).html("Show Graph");
+	}
+ });
+
+// Show user stat 
+ $("#showstats").click(function() {
+	if ($(this).html() == "Show Stats") {
+		$("#user_stat").slideDown("slow");
+		$(this).html("Hide Stats");
+	}
+	else {
+		$("#user_stat").slideUp("slow");
+		$(this).html("Show Stats");
+	}
+ });
+
+// Show user log 
+ $("#showlog").click(function() {
+   $("#user_log").slideDown("slow");
+   $(this).hide();
+   $("#hidelog").show();
+   $("#hidelog").innerHTML = "srini";
+ });
 // Hide user log
  $("#hidelog").click(function() {
-   $(".user_data").slideUp("slow");
+   $("#user_log").slideUp("slow");
    $(this).hide();
    $("#showlog").show();
  });
