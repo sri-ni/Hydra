@@ -7,13 +7,6 @@
  });
 </script>
 
-<script language="javascript" type="text/javascript" src="/templates/jquery.jqplot.min.js"></script>
-<script type="text/javascript" src="/templates/jqplot.barRenderer.min.js"></script>
-<script type="text/javascript" src="/templates/jqplot.categoryAxisRenderer.min.js"></script>
-<script type="text/javascript" src="/templates/jqplot.pointLabels.min.js"></script>
-<script language="javascript" type="text/javascript" src="/templates/jquery-1.4.4.min.js"></script>
-<script language="javascript" type="text/javascript" src="/templates/jquery.jqplot.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/templates/jquery.jqplot.css" />
 
 <!--Main input layer-->
 <div class="home_body">
@@ -85,12 +78,59 @@
 <!--Graph-->
 <div class="user_data" id="user_graph" style="display:none">
   <div class="user"><h3>{{ user }}'s graph<h3></div>
-  <div id="chartdiv" style="height:400px;width:300px; "></div>
+  <div id="barchartdiv" style="height:400px;width:400px; "></div>
 </div>
 
 
 
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery.jqplot.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jquery.jqplot.css') }}" />
+
+<script src="{{ url_for('static', filename='jqplot.barRenderer.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jqplot.categoryAxisRenderer.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jqplot.pointLabels.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='jqplot.pieRenderer.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jqplot.donutRenderer.min.js') }}"></script>
+
 <script>
+
+$(document).ready(function(){
+//	$.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]);
+});
+
+
+// Show user graph 
+ $("#showgraph").click(function() {
+	var outs = [];
+	var inns = [];
+	  {% for entry in liquid_ctgry_cnt %}
+		inns=['{{ entry.category }}',{{ entry.count }}];
+		outs.push(inns);		
+	  {% endfor %}
+	  $.jqplot ('barchartdiv', [outs],
+	    {
+		  grid: { drawBorder: false, shadow: false },
+	      seriesDefaults: {
+	        renderer: jQuery.jqplot.PieRenderer,
+	        rendererOptions: {
+	          showDataLabels: true,
+			  shadowOffset: 1
+	        }
+	      },
+	      legend: { show:true, location: 'e' }
+	    }
+	  );
+		if ($(this).html() == "Show Graph") {
+			$("#user_graph").slideDown("slow");
+			$(this).html("Hide Graph");
+		}
+		else {
+			$("#user_graph").slideUp("slow");
+			$(this).html("Show Graph");
+		}
+	 });
 
 // Show user alert 
  $("#showalert").click(function() {
@@ -102,19 +142,6 @@
 	else {
 		$("#user_alert").slideUp("slow");
 		$(this).html("Show Alert");
-	}
- });
-
-// Show user graph 
- $("#showgraph").click(function() {
-	
-	if ($(this).html() == "Show Graph") {
-		$("#user_graph").slideDown("slow");
-		$(this).html("Hide Graph");
-	}
-	else {
-		$("#user_graph").slideUp("slow");
-		$(this).html("Show Graph");
 	}
  });
 
